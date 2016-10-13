@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct Sudoku
 {
@@ -130,7 +131,7 @@ void Print(Sudoku* sudoku)
 void PrintAll(Sudoku* sudoku)
 {
     
-    printf("┏━━━━━┯━━━━━┯━━━━━┳━━━━━┯━━━━━┯━━━━━┳━━━━━┯━━━━━┯━━━━━┓\n");
+    printf("┏━━━━━━━┯━━━━━━━┯━━━━━━━┳━━━━━━━┯━━━━━━━┯━━━━━━━┳━━━━━━━┯━━━━━━━┯━━━━━━━┓\n");
     for(int i = 0;i != 9;++i)
     {
         for(int k = 0;k != 3; ++k)
@@ -143,14 +144,13 @@ void PrintAll(Sudoku* sudoku)
                 {
                     if(sudoku->main[i][j][3*k+l])
                     {
-                        printf("%d",sudoku->main[i][j][3*k+l]);
+                        printf("%d ",sudoku->main[i][j][3*k+l]);
                     }
                     else
                     {
-                        printf(" ");
+                        printf("  ");
                     }
                 }
-                printf(" ");
                 if(((j+1)%3))
                 {
                     printf("│");
@@ -164,16 +164,16 @@ void PrintAll(Sudoku* sudoku)
         }
         if((i != 8)&&((i+1)%3))
         {
-            printf("┠─────┼─────┼─────╂─────┼─────┼─────╂─────┼─────┼─────┨");
+            printf("┠───────┼───────┼───────╂───────┼───────┼───────╂───────┼───────┼───────┨");
             printf("\n");
         }
         else if(i != 8)
         {
-            printf("┣━━━━━┿━━━━━┿━━━━━╋━━━━━┿━━━━━┿━━━━━╋━━━━━┿━━━━━┿━━━━━┫\n");
+            printf("┣━━━━━━━┿━━━━━━━┿━━━━━━━╋━━━━━━━┿━━━━━━━┿━━━━━━━╋━━━━━━━┿━━━━━━━┿━━━━━━━┫\n");
         }
     }
 
-    printf("┗━━━━━┷━━━━━┷━━━━━┻━━━━━┷━━━━━┷━━━━━┻━━━━━┷━━━━━┷━━━━━┛");
+    printf("┗━━━━━━━┷━━━━━━━┷━━━━━━━┻━━━━━━━┷━━━━━━━┷━━━━━━━┻━━━━━━━┷━━━━━━━┷━━━━━━━┛");
     printf("\n");
 }
 
@@ -281,10 +281,10 @@ _Bool FindSame(Sudoku* sudoku,int state,int x_position,int y_position,_Bool* Sam
             {
                 for(int j = (y_position)/3*3;j != (y_position)/3*3+3; ++j)
                 {
-                    printf("i = %d,j = %d,\n",i,j);
+                    //printf("i = %d,j = %d,\n",i,j);
                     if(Equal(sudoku->main[i][j],sudoku->main[x_position][y_position]))
                     {
-                        printf("%d,%d,%d,%d,\n",i,j,x_position,y_position);
+                        //printf("%d,%d,%d,%d,\n",i,j,x_position,y_position);
                         SamePosition[(i%3)*3+j%3] = true;
                     }
                 }
@@ -305,11 +305,11 @@ _Bool FindSame(Sudoku* sudoku,int state,int x_position,int y_position,_Bool* Sam
             NonZeroCount++;
         }
     }
-    for(int i = 0;i != 9;++i)
-    {
-        printf("\nNonZero[%d] = %d,same[%d] = %d\n",i,NonZero[i],i,SamePosition[i]);
-    }
-    printf("\n\nNonZeroCount = %d,SamePositionCount = %d\n\n",NonZeroCount,SamePositionCount);
+    //for(int i = 0;i != 9;++i)
+    //{
+        //printf("\nNonZero[%d] = %d,same[%d] = %d\n",i,NonZero[i],i,SamePosition[i]);
+    //}
+    //printf("\n\nNonZeroCount = %d,SamePositionCount = %d\n\n",NonZeroCount,SamePositionCount);
     return (NonZeroCount == SamePositionCount);
 }
 
@@ -383,39 +383,39 @@ void ClearSome(Sudoku* sudoku)
     {
         for(int j = 0;j != 9;++j)
         {
-            printf("\n\n\nx = %d,y = %d,mode = 1\n\n\n",i,j);
+            //printf("\n\n\nx = %d,y = %d,mode = 1\n\n\n",i,j);
            if(FindSame(sudoku,1,i,j,same,NonZero))
            {
-               for(int i = 0;i != 9;++i)
-               {
-                   printf("%d ",same[i]);
-               }
-               printf("\n");
+               //for(int i = 0;i != 9;++i)
+               //{
+                   //printf("%d ",same[i]);
+               //}
+               //printf("\n");
                Clear(sudoku,1,i,j,same);
            }
-           printf("\n\n\nx = %d,y = %d,mode = 2\n\n\n",i,j);
+           //printf("\n\n\nx = %d,y = %d,mode = 2\n\n\n",i,j);
            if(FindSame(sudoku,2,i,j,same,NonZero))
            {
 
-               for(int i = 0;i != 9;++i)
-               {
-                   printf("%d ",same[i]);
-               }
-               printf("\n");
+               //for(int i = 0;i != 9;++i)
+               //{
+                   //printf("%d ",same[i]);
+               //}
+               //printf("\n");
                Clear(sudoku,2,i,j,same);
-               PrintAll(sudoku);
+               //PrintAll(sudoku);
            }
-           printf("\n\n\nx = %d,y = %d,mode = 3\n\n\n",i,j);
+           //printf("\n\n\nx = %d,y = %d,mode = 3\n\n\n",i,j);
            if(FindSame(sudoku,3,i,j,same,NonZero))
            {
-               for(int i = 0;i != 9;++i)
-               {
-                   printf("%d ",same[i]);
-               }
-               printf("\n");
+               //for(int i = 0;i != 9;++i)
+               //{
+                   //printf("%d ",same[i]);
+               //}
+               //printf("\n");
                Clear(sudoku,3,i,j,same);
-               PrintAll(sudoku);
-               printf("\n\n");
+               //PrintAll(sudoku);
+               //printf("\n\n");
            }
         }
     }
@@ -496,15 +496,19 @@ void SetStatic(Sudoku* sudoku)
             int position = 0;
             for(int y = 0;y != 9;++y)
             {
+                if(!sudoku->StaticNumber[y][i])
+                {
+                    break;
+                }
                 if(sudoku->main[y][i][x])
                 {
-                    position = y;
                     ++count;
+                    position = y;
                 }
             }
             if(count == 1)
             {
-                int value = sudoku->main[position][i][x];
+                char value = sudoku->main[position][i][x];
                 for(int y = 0;y != 9; ++y)
                 {
                     sudoku->main[position][i][y] = 0;
@@ -565,32 +569,85 @@ void SetStatic(Sudoku* sudoku)
     }
 }
 
+
+void Menu(Sudoku* sudoku)
+{
+    system("clear");
+    printf("*****************************************************\n");
+    printf("*                  Sudoku World                     *\n");
+    printf("*****************************************************\n");
+    printf("\n\n\n");
+    printf("*****************************************************\n");
+    printf("*****************************************************\n");
+    printf("*    1.set puzzle                                   *\n");
+    printf("*    2.read puzzle from file                        *\n");
+    printf("*    3.help                                         *\n");
+    printf("*    4.exit                                         *\n");
+    printf("*****************************************************\n");
+    printf("*****************************************************\n\n\n");
+    int select = 0;
+    scanf("%d",&select);
+    switch(select)
+    {
+        case 1:
+            {
+                system("clear");
+                SetPuzzle(sudoku);
+                break;
+            }
+        case 2:
+            {
+                system("clear");
+                printf("intput the file name:\n");
+                char filename[20];
+                scanf("%s",filename);
+                ReadFromFile(sudoku,filename);
+                break;
+            }
+        case 3:
+            {
+                system("clear");
+                printf("1.this program is used to solve the sudoku!\n");
+                printf("2.this program is still in debug,some errors may happen when using it.Report to the author if possible!\n");
+                printf("3.author: zhengcong!    ALL RIGHTS RESERVED!\n");
+            }
+            break;
+    }
+}
+
 int main(int argc,char* argv[])
 {
     Sudoku sudoku;
     Init(&sudoku);
-    if(argc == 2)
-    {
-        ReadFromFile(&sudoku,argv[1]);
-    }
+    Menu(&sudoku);
     printf("\n\nafter reading the file:\n");
     Print(&sudoku);
     FindAllPosibility(&sudoku);
     printf("\n\nafter find all posibility:\n");
     PrintAll(&sudoku);
     SetStatic(&sudoku);
-    printf("\n\nafter set static first:\n");
-    PrintAll(&sudoku);
+    //printf("\n\nafter set static first:\n");
+    //PrintAll(&sudoku);
+    
+    int count = 0;
     while(!CheckEnd(&sudoku))
     {
         ClearSome(&sudoku);
-        printf("\n\nafter clear some element:\n");
-        PrintAll(&sudoku);
+        //printf("\n\nafter clear some element:\n");
+        //PrintAll(&sudoku);
         SetStatic(&sudoku);
-        printf("\n\n after set static second:\n");
-        PrintAll(&sudoku);
+        //printf("\n\n after set static second:\n");
+        //PrintAll(&sudoku);
+        count ++;
+        if(count >= 10000)
+        {
+            system("clear");
+            printf("the sudoku is too dificulit!we cann't solve it!\n");
+            break;
+        }
     }
     printf("\n\nafter all!:\n");
+    Print(&sudoku);
     PrintAll(&sudoku);
     return 0;
 }
